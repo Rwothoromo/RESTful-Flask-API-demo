@@ -4,13 +4,11 @@ app = Flask(__name__)
 # picture a list of items from the db
 languages = [{'name': 'py'}, {'name': 'js'}, {'name': 'php'}]
 
+
 # using get request -- for reading date e.g. from db
-
-
 @app.route('/', methods=['GET'])
 def test():
     return jsonify({'message': 'here we go'})
-
 
 @app.route('/lang', methods=['GET'])
 def returnAll():
@@ -18,8 +16,6 @@ def returnAll():
     return jsonify({'languages': languages})
 
 # route to <datatype:key>
-
-
 @app.route('/lang/<string:name>', methods=['GET'])
 def returnOne(name):
     # get dict for and return value of a key in the dict
