@@ -11,13 +11,13 @@ def test():
     return jsonify({'message': "Here we go! You can open the endpoints '/lang' and '/lang/<string:name>' in the browser OR these on Postman POST '/lang', PUT '/lang/<string:name>', DELETE '/lang/<string:name>'"})
 
 @app.route('/lang', methods=['GET'])
-def returnAll():
+def get_all():
     # return a dict of languages
     return jsonify({'languages': languages})
 
 # route to <datatype:key>
 @app.route('/lang/<string:name>', methods=['GET'])
-def returnOne(name):
+def get_one(name):
     # get dict for and return value of a key in the dict
     langs = [language for language in languages if language['name'] == name]
     return jsonify({'languages': langs[0]})
@@ -25,7 +25,7 @@ def returnOne(name):
 
 # using post request -- for data insertion
 @app.route('/lang', methods=['POST'])
-def addOne():
+def create_one():
     # append a supplied language to the languages dict
     language = {'name': request.json['name']}
     languages.append(language)
@@ -35,7 +35,7 @@ def addOne():
 
 # using put request -- for data update
 @app.route('/lang/<string:name>', methods=['PUT'])
-def editOne(name):
+def edit_one(name):
     # get dict for and return value of a key in the dict
     langs = [language for language in languages if language['name'] == name]
 
@@ -51,7 +51,7 @@ def editOne(name):
 
 # using delete request -- for data deletion
 @app.route('/lang/<string:name>', methods=['DELETE'])
-def removeOne(name):
+def remove_one(name):
     # get dict for the key to be deleted
     lang = [language for language in languages if language['name'] == name]
     languages.remove(lang[0])
