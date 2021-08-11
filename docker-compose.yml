@@ -1,0 +1,17 @@
+# define the Compose file format (https://docs.docker.com/compose/compose-file/)
+version: "3.8"
+
+# define the services to use for the app
+services:
+  app:
+    # build the Docker image using the Dockerfile
+    build: .
+    command: python restful.py
+    # map port 5000 on the host to port 5000 on the container. By default, Flask runs on 5000
+    ports:
+      - "5000:5000"
+    # mount a folder from the host machine to the container
+    volumes:
+      - .:/flask_demo
+    env_file:
+      - ./.env.dev

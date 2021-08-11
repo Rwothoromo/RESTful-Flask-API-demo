@@ -8,7 +8,7 @@ languages = [{'name': 'py'}, {'name': 'js'}, {'name': 'php'}]
 # using get request -- for reading date e.g. from db
 @app.route('/', methods=['GET'])
 def test():
-    return jsonify({'message': 'here we go'})
+    return jsonify({'message': "Here we go! You can open the endpoints '/lang' and '/lang/<string:name>' in the browser OR these on Postman POST '/lang', PUT '/lang/<string:name>', DELETE '/lang/<string:name>'"})
 
 @app.route('/lang', methods=['GET'])
 def returnAll():
@@ -59,4 +59,4 @@ def removeOne(name):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run(host="0.0.0.0", debug=True)
