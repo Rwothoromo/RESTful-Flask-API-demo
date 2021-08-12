@@ -1,0 +1,37 @@
+Endpoint that creates a language
+---
+tags:
+  - Language
+parameters:
+  - name: body
+    description: language creation data
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "name"
+      properties:
+        name:
+          type: "string"
+          example: "Clojure"
+
+responses:
+  201:
+    description: Language added
+    schema: 
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "Language added"
+  409:
+    description: Language already exists
+    schema: 
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "Language already exists"

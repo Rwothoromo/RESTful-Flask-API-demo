@@ -1,5 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect
+from flasgger import Swagger, swag_from
+
 app = Flask(__name__)
+swagger = Swagger(app)
 
 # picture a list of items from the db
 languages = [{'name': 'py'}, {'name': 'js'}, {'name': 'php'}]
@@ -7,17 +10,19 @@ languages = [{'name': 'py'}, {'name': 'js'}, {'name': 'php'}]
 
 # using get request -- for reading date e.g. from db
 @app.route('/', methods=['GET'])
-def test():
-    return jsonify({'message': "Here we go! You can open the endpoints '/lang' and '/lang/<string:name>' in the browser OR these on Postman POST '/lang', PUT '/lang/<string:name>', DELETE '/lang/<string:name>'"})
+def home():
+    return redirect('/apidocs')
 
 @app.route('/lang', methods=['GET'])
-def get_all():
+@swag_from('docs/get_languages.yml')
+def get_langs():
     # return a dict of languages
     return jsonify({'languages': languages})
 
 # route to <datatype:key>
 @app.route('/lang/<string:name>', methods=['GET'])
-def get_one(name):
+@swag_from('docs/get_language.yml')
+def get_lang(name):
     # get dict for and return value of a key in the dict
     langs = [language for language in languages if language['name'] == name]
     return jsonify({'languages': langs[0]})
@@ -25,7 +30,8 @@ def get_one(name):
 
 # using post request -- for data insertion
 @app.route('/lang', methods=['POST'])
-def create_one():
+@swag_from('docs/post_language.yml')
+def create_lang():
     # append a supplied language to the languages dict
     language = {'name': request.json['name']}
     languages.append(language)
@@ -35,7 +41,8 @@ def create_one():
 
 # using put request -- for data update
 @app.route('/lang/<string:name>', methods=['PUT'])
-def edit_one(name):
+@swag_from('docs/put_language.yml')
+def edit_lang(name):
     # get dict for and return value of a key in the dict
     langs = [language for language in languages if language['name'] == name]
 
@@ -51,7 +58,8 @@ def edit_one(name):
 
 # using delete request -- for data deletion
 @app.route('/lang/<string:name>', methods=['DELETE'])
-def remove_one(name):
+@swag_from('docs/delete_language.yml')
+def remove_lang(name):
     # get dict for the key to be deleted
     lang = [language for language in languages if language['name'] == name]
     languages.remove(lang[0])

@@ -13,4 +13,4 @@ FLASK_ENV=development
 * Run `docker compose down -v`
 * Run `docker compose build`
 * Run `docker compose up`
-* Open `http://localhost:5000/` in your browser
+* Open `http://localhost:5000/apidocs` in your browser

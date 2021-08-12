@@ -1,0 +1,30 @@
+Endpoint that deletes a language
+---
+tags:
+  - Language
+parameters:
+  - name: name
+    description: language key
+    type: string
+    in: path
+    required: true
+
+responses:
+  200:
+    description: Language deleted
+    schema: 
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "Language deleted"
+  404:
+    description: Language not found
+    schema: 
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "Language not found"
